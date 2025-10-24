@@ -6,6 +6,5 @@ public class KeyEventsTest {
     @Test
     void test() {
         Player player = new Player();
-        player.dx;
     }
 }
