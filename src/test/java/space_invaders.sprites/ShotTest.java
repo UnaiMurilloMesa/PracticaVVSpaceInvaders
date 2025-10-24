@@ -31,9 +31,9 @@ public class ShotTest {
         int expectedY = y - 1;
 
         assertNotNull(shot.getImage(), "La imagen de Shot no debería de ser null");
-        assertEquals(expectedX, shot.getX(), "La posición de Shot debería ser " + x);
-        assertEquals(expectedY, shot.getY(), "La posición de Shot debería ser " + y);
+        assertEquals(expectedX, shot.getX(), "La posición de Shot debería ser " + expectedX);
+        assertEquals(expectedY, shot.getY(), "La posición de Shot debería ser " + expectedY);
     }
 
-    //TODO Por qué suma 6 a 'x' y resta 1 a 'y'?
+    //TODO Por qué suma 6 a 'x' y resta 1 a 'y', hay límites negativos?
 }
