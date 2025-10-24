@@ -1,0 +1,12 @@
+Alien, Bomb -> Alonso
+Player -> Albertos
+César -> Shots
+Board -> Unai
+
+1 Fase: Rama caja negra
+- Límites
+- Valores especiales para los métodos que los tienen
+- Clases de equivalencia para métodos con lógica más avanzada
+
+2 Fase: Rama caja blanca
+- Grafo
