@@ -3,8 +3,8 @@ package space_invaders.sprites;
 import main.Commons;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.awt.event.KeyEvent;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PlayerTest {
 
     private Player player;
+
 
     @BeforeEach
     void setUp() {
@@ -68,26 +69,40 @@ public class PlayerTest {
         assertEquals(posXBefore - 2, player.getX(), "El jugador debe moverse 2 píxeles a la izquierda");
     }
 
-    //el jugador se sale por el borde izquierdo
-    @Test
-    public void testAct_LeftBoundaryLimit() {
-        player.setX(Commons.BORDER_LEFT);
-        player.dx = -3;
+    //tests para los límites izquierdo en act()
+    @ParameterizedTest
+    @CsvSource({
+            "7, -2, " + Commons.BORDER_LEFT,
+            "5, -2, " + Commons.BORDER_LEFT,
+            "3, -2, " + Commons.BORDER_LEFT
+    })
+    void testAct_LeftBoundary(int initialX, int dx, int expectedX) {
+        player.setX(initialX);
+        player.dx = dx;
 
         player.act();
 
-        assertEquals(Commons.BORDER_LEFT, player.getX(), "El jugador no debe pasar el borde izquierdo");
+        assertEquals(expectedX, player.getX(), "El jugador no debe pasar el borde izquierdo");
     }
 
-    @Test
-    public void testAct_RightBoundaryLimit() {
+
+    //tests para los límites derecho en act()
+    @ParameterizedTest
+    @CsvSource({
+            "312, 2",
+            "313, 2",
+            "314, 2"
+    })
+    void testAct_RightBoundary(int initialX, int dx) {
         int rightLimit = Commons.BOARD_WIDTH - Commons.PLAYER_WIDTH - Commons.BORDER_RIGHT;
 
-        player.setX(rightLimit);
+        player.setX(initialX);
+        player.dx = dx;
 
         player.act();
 
-        assertEquals(rightLimit, player.getX(),
-                "El jugador no debe pasar el borde derecho");
+        assertEquals(rightLimit, player.getX(), "El jugador no debe pasar el borde derecho");
     }
+
+
 }
