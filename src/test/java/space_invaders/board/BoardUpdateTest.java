@@ -32,11 +32,9 @@ public class BoardUpdateTest {
 
         invokePrivateUpdate();
 
-        assertAll(
-                () -> assertFalse(board.isInGame(), "El juego debe finalizar"),
-                () -> assertFalse(board.getTimer().isRunning(), "El juego debe finalizar" ),
-                () -> assertEquals("Game won!", board.getMessage(), "Debe mostrar el mensaje de victoria")
-        );
+        assertFalse(board.isInGame(), "El juego debe finalizar");
+        assertFalse(board.getTimer().isRunning(), "El juego debe finalizar" );
+        assertEquals("Game won!", board.getMessage(), "Debe mostrar el mensaje de victoria");
     }
 
     @Test
