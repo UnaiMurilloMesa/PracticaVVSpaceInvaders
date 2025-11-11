@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import main.Commons;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test; // Importamos @Test en lugar de los parametrizados
+import org.junit.jupiter.api.Test;
 
 class AlienTest {
 
@@ -25,10 +25,10 @@ class AlienTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X < 0 (Robusto) -> X debe ajustarse a 0")
+    @DisplayName("[Init] X < 0 (Robusto) -> X debe ajustarse a " + CERO)
     void testInitAlien_XDebajoLimiteInferior_DebeAproximarseACero() {
         Alien alien = new Alien(-1, Y_NOMINAL);
-        assertEquals(CERO, alien.getX(), "X debe ajustarse al límite inferior CERO");
+        assertEquals(CERO, alien.getX(), "X debe ajustarse al límite inferior " + CERO);
         assertEquals(Y_NOMINAL, alien.getY(), "Y debe mantener su valor nominal");
     }
 
@@ -38,11 +38,11 @@ class AlienTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X = 0 (Límite Inf) -> X debe ser 0")
+    @DisplayName("[Init] X = 0 (Límite Inf) -> X debe ser " + CERO)
     void testInitAlien_XEnLimiteInferior_DebeSerCero() {
         Alien alien = new Alien(CERO, Y_NOMINAL);
-        assertEquals(CERO, alien.getX());
-        assertEquals(Y_NOMINAL, alien.getY());
+        assertEquals(CERO, alien.getX(), "X debe ser el límite inferior " + CERO);
+        assertEquals(Y_NOMINAL, alien.getY(), "Y debe mantener su valor nominal");
     }
 
     /**
@@ -51,11 +51,11 @@ class AlienTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X = 1 (Límite Inf+) -> X debe ser 1")
+    @DisplayName("[Init] X = 1 (Límite Inf+) -> X debe ser " + (CERO + 1))
     void testInitAlien_XEncimaLimiteInferior_DebeSerUno() {
         Alien alien = new Alien(CERO + 1, Y_NOMINAL);
-        assertEquals(CERO + 1, alien.getX());
-        assertEquals(Y_NOMINAL, alien.getY());
+        assertEquals(CERO + 1, alien.getX(), "X debe ser el límite inferior más uno " + (CERO + 1));
+        assertEquals(Y_NOMINAL, alien.getY(), "Y debe mantener su valor nominal");
     }
 
     /**
@@ -64,11 +64,11 @@ class AlienTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X = MAX-1 (Límite Sup-) -> X debe ser MAX-1")
+    @DisplayName("[Init] X = MAX-1 (Límite Sup-) -> X debe ser " + (ANCHO - 1))
     void testInitAlien_XDebajoLimiteSuperior_DebeSerMaxMenosUno() {
         Alien alien = new Alien(ANCHO - 1, Y_NOMINAL);
-        assertEquals(ANCHO - 1, alien.getX());
-        assertEquals(Y_NOMINAL, alien.getY());
+        assertEquals(ANCHO - 1, alien.getX(), "X debe ser el límite superior menos uno " + (ANCHO - 1));
+        assertEquals(Y_NOMINAL, alien.getY(), "Y debe mantener su valor nominal");
     }
 
     /**
@@ -77,11 +77,11 @@ class AlienTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X = MAX (Límite Sup) -> X debe ser MAX")
+    @DisplayName("[Init] X = MAX (Límite Sup) -> X debe ser " + ANCHO)
     void testInitAlien_XEnLimiteSuperior_DebeSerMax() {
         Alien alien = new Alien(ANCHO, Y_NOMINAL);
-        assertEquals(ANCHO, alien.getX());
-        assertEquals(Y_NOMINAL, alien.getY());
+        assertEquals(ANCHO, alien.getX(), "X debe ser el límite superior " + ANCHO);
+        assertEquals(Y_NOMINAL, alien.getY(), "Y debe mantener su valor nominal");
     }
 
     /**
@@ -90,10 +90,10 @@ class AlienTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X > MAX (Robusto) -> X debe ajustarse a MAX")
+    @DisplayName("[Init] X > MAX (Robusto) -> X debe ajustarse a " + ANCHO)
     void testInitAlien_XEncimaLimiteSuperior_DebeAproximarseAMax() {
         Alien alien = new Alien(ANCHO + 1, Y_NOMINAL);
-        assertEquals(ANCHO, alien.getX(), "X debe ajustarse al límite superior ANCHO");
+        assertEquals(ANCHO, alien.getX(), "X debe ajustarse al límite superior " + ANCHO);
         assertEquals(Y_NOMINAL, alien.getY(), "Y debe mantener su valor nominal");
     }
 
@@ -105,11 +105,11 @@ class AlienTest {
      * Y = min- (-1)
      */
     @Test
-    @DisplayName("[Init] Y < 0 (Robusto) -> Y debe ajustarse a 0")
+    @DisplayName("[Init] Y < 0 (Robusto) -> Y debe ajustarse a " + CERO)
     void testInitAlien_YDebajoLimiteInferior_DebeAproximarseACero() {
         Alien alien = new Alien(X_NOMINAL, -1);
         assertEquals(X_NOMINAL, alien.getX(), "X debe mantener su valor nominal");
-        assertEquals(CERO, alien.getY(), "Y debe ajustarse al límite inferior CERO");
+        assertEquals(CERO, alien.getY(), "Y debe ajustarse al límite inferior " + CERO);
     }
 
     /**
@@ -118,11 +118,11 @@ class AlienTest {
      * Y = min (0)
      */
     @Test
-    @DisplayName("[Init] Y = 0 (Límite Inf) -> Y debe ser 0")
+    @DisplayName("[Init] Y = 0 (Límite Inf) -> Y debe ser " + CERO)
     void testInitAlien_YEnLimiteInferior_DebeSerCero() {
         Alien alien = new Alien(X_NOMINAL, CERO);
-        assertEquals(X_NOMINAL, alien.getX());
-        assertEquals(CERO, alien.getY());
+        assertEquals(X_NOMINAL, alien.getX(), "X debe mantener su valor nominal");
+        assertEquals(CERO, alien.getY(), "Y debe ser el límite inferior " + CERO);
     }
 
     /**
@@ -131,11 +131,11 @@ class AlienTest {
      * Y = min+ (1)
      */
     @Test
-    @DisplayName("[Init] Y = 1 (Límite Inf+) -> Y debe ser 1")
+    @DisplayName("[Init] Y = 1 (Límite Inf+) -> Y debe ser " + (CERO + 1))
     void testInitAlien_YEncimaLimiteInferior_DebeSerUno() {
         Alien alien = new Alien(X_NOMINAL, CERO + 1);
-        assertEquals(X_NOMINAL, alien.getX());
-        assertEquals(CERO + 1, alien.getY());
+        assertEquals(X_NOMINAL, alien.getX(), "X debe mantener su valor nominal");
+        assertEquals(CERO + 1, alien.getY(), "Y debe ser el límite inferior más uno " + (CERO + 1));
     }
 
     /**
@@ -144,11 +144,11 @@ class AlienTest {
      * Y = max- (ALTO - 1)
      */
     @Test
-    @DisplayName("[Init] Y = MAX-1 (Límite Sup-) -> Y debe ser MAX-1")
+    @DisplayName("[Init] Y = MAX-1 (Límite Sup-) -> Y debe ser " + (ALTO - 1))
     void testInitAlien_YDebajoLimiteSuperior_DebeSerMaxMenosUno() {
         Alien alien = new Alien(X_NOMINAL, ALTO - 1);
-        assertEquals(X_NOMINAL, alien.getX());
-        assertEquals(ALTO - 1, alien.getY());
+        assertEquals(X_NOMINAL, alien.getX(), "X debe mantener su valor nominal");
+        assertEquals(ALTO - 1, alien.getY(), "Y debe ser el límite superior menos uno " + (ALTO - 1));
     }
 
     /**
@@ -157,11 +157,11 @@ class AlienTest {
      * Y = max (ALTO)
      */
     @Test
-    @DisplayName("[Init] Y = MAX (Límite Sup) -> Y debe ser MAX")
+    @DisplayName("[Init] Y = MAX (Límite Sup) -> Y debe ser " + ALTO)
     void testInitAlien_YEnLimiteSuperior_DebeSerMax() {
         Alien alien = new Alien(X_NOMINAL, ALTO);
-        assertEquals(X_NOMINAL, alien.getX());
-        assertEquals(ALTO, alien.getY());
+        assertEquals(X_NOMINAL, alien.getX(), "X debe mantener su valor nominal");
+        assertEquals(ALTO, alien.getY(), "Y debe ser el límite superior " + ALTO);
     }
 
     /**
@@ -170,11 +170,11 @@ class AlienTest {
      * Y = max+ (ALTO + 1)
      */
     @Test
-    @DisplayName("[Init] Y > MAX (Robusto) -> Y debe ajustarse a MAX")
+    @DisplayName("[Init] Y > MAX (Robusto) -> Y debe ajustarse a " + ALTO)
     void testInitAlien_YEncimaLimiteSuperior_DebeAproximarseAMax() {
         Alien alien = new Alien(X_NOMINAL, ALTO + 1);
         assertEquals(X_NOMINAL, alien.getX(), "X debe mantener su valor nominal");
-        assertEquals(ALTO, alien.getY(), "Y debe ajustarse al límite superior ALTO");
+        assertEquals(ALTO, alien.getY(), "Y debe ajustarse al límite superior " + ALTO);
     }
 
     // --- Caso de Prueba Central (El "+1" en 6n+1) ---
@@ -195,46 +195,57 @@ class AlienTest {
     // [Función Act de Alien]
 
     /**
-     * 1. [Valores Válidos] - Movimiento válido a la derecha
+     * 1. [Límite Inferior] - Si el movimiento sobrepasa el límite inferior, se ajusta.
      */
     @Test
-    @DisplayName("[Act] Movimiento válido a la derecha (100 -> 101)")
-    void testAlienAct_MovimientoValidoDerecha() {
-        Alien alien = new Alien(100, 0); // Y init no importa para 'act'
-        alien.act(1); // Mover a la derecha
-        assertEquals(101, alien.getX(), "X debe incrementarse en 1");
-    }
-
-    /**
-     * 2. [Valores Válidos] - Movimiento válido a la izquierda
-     */
-    @Test
-    @DisplayName("[Act] Movimiento válido a la izquierda (100 -> 99)")
-    void testAlienAct_MovimientoValidoIzquierda() {
-        Alien alien = new Alien(100, 0);
-        alien.act(-1); // Mover a la izquierda
-        assertEquals(99, alien.getX(), "X debe decrementarse en 1");
-    }
-
-    /**
-     * 3. [Límite Inferior] - Si el movimiento sobrepasa el límite inferior, se ajusta.
-     */
-    @Test
-    @DisplayName("[Act] Límite inferior robusto (0 - 1 -> 0)")
-    void testAlienAct_LimiteInferiorRobusto() {
+    @DisplayName("[Act] Límite inferior robusto -> Izquierda (0 - 2 -> 0)")
+    void testAlienAct_LimiteInferiorRobusto_MovimientoIzquierda() {
         Alien alien = new Alien(CERO, 0);
-        alien.act(-1); // Intentar mover a -1
-        assertEquals(CERO, alien.getX(), "X no debe ser menor que CERO");
+        alien.act(-2); // Intentar mover a -2
+        assertEquals(CERO, alien.getX(), "X debe ser " + CERO);
     }
 
     /**
-     * 4. [Límite Superior] - Si el movimiento sobrepasa el límite superior, se ajusta.
+     * 2. [Límite Inferior] - Movimiento dentro del límite desde el límite inferior.
      */
     @Test
-    @DisplayName("[Act] Límite superior robusto (MAX + 1 -> MAX)")
-    void testAlienAct_LimiteSuperiorRobusto() {
+    @DisplayName("[Act] Límite inferior -> Derecha (0 + 2 -> +2)")
+    void testAlienAct_LimiteInferior_MovimientoDerecha() {
+        Alien alien = new Alien(CERO, 0);
+        alien.act(+2); // Intentar mover a +2
+        assertEquals(CERO, alien.getX(), "X debe ser " + (CERO + 2));
+    }
+
+    /**
+     * 3. [Nóminal] - Sin movimiento desde posición nóminal.
+     */
+    @Test
+    @DisplayName("[Act] Nóminal -> Sin movimiento (X_NOMINAL + 0 -> X_NOMINAL)")
+    void testAlienAct_Nominal_SinMovimiento() {
+        Alien alien = new Alien(X_NOMINAL, 0);
+        alien.act(0); // Sin movimiento
+        assertEquals(X_NOMINAL, alien.getX(), "X debe ser " + X_NOMINAL);
+    }
+
+    /**
+     * 4. [Límite Superior] - Movimiento dentro del límite desde el límite superior.
+     */
+    @Test
+    @DisplayName("[Act] Límite superior -> Izquierda (" + ANCHO + " - 2 -> " + (ANCHO - 2) + ")")
+    void testAlienAct_LimiteSuperior_MovimientoIzquierda() {
         Alien alien = new Alien(ANCHO, 0);
-        alien.act(1); // Intentar mover a ANCHO + 1
-        assertEquals(ANCHO, alien.getX(), "X no debe ser mayor que ANCHO");
+        alien.act(-2); // Intentar mover a ANCHO - 2
+        assertEquals(ANCHO - 2, alien.getX(), "X debe ser " + (ANCHO - 2));
+    }
+
+    /**
+     * 5. [Límite Superior] - Si el movimiento sobrepasa el límite superior, se ajusta.
+     */
+    @Test
+    @DisplayName("[Act] Límite superior robusto (" + ANCHO + " + 2 -> " + ANCHO + ")")
+    void testAlienAct_LimiteSuperiorRobusto_MovimientoDerecha() {
+        Alien alien = new Alien(ANCHO, 0);
+        alien.act(+2); // Intentar mover a ANCHO + 2
+        assertEquals(ANCHO, alien.getX(), "X debe ser " + ANCHO);
     }
 }

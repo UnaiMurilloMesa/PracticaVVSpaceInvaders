@@ -3,8 +3,6 @@ package space_invaders.sprites;
 import main.Commons;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -27,11 +25,11 @@ class AlienBombTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X < 0 (Robusto) -> X debe ajustarse a 0")
+    @DisplayName("[Init] X = " + (CERO - 1) + " (Robusto) -> X debe ajustarse a " + CERO)
     void testInitAlienBomb_XDebajoLimiteInferior_DebeAproximarseACero() {
         Alien alien = new Alien(-1, Y_NOMINAL);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(CERO, alienBomb.getX(), "X debe ajustarse al límite inferior CERO");
+        assertEquals(CERO, alienBomb.getX(), "X debe ajustarse al límite inferior " + CERO);
         assertEquals(Y_NOMINAL, alienBomb.getY(), "Y debe mantener su valor nominal");
     }
 
@@ -41,12 +39,12 @@ class AlienBombTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X = 0 (Límite Inf) -> X debe ser 0")
+    @DisplayName("[Init] X = " + CERO + " (Límite Inf) -> X debe ser " + CERO)
     void testInitAlienBomb_XEnLimiteInferior_DebeSerCero() {
         Alien alien = new Alien(CERO, Y_NOMINAL);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(CERO, alienBomb.getX());
-        assertEquals(Y_NOMINAL, alienBomb.getY());
+        assertEquals(CERO, alienBomb.getX(), "X debe ser el límite inferior " + CERO);
+        assertEquals(Y_NOMINAL, alienBomb.getY(), "Y debe mantener su valor nominal");
     }
 
     /**
@@ -55,12 +53,12 @@ class AlienBombTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X = 1 (Límite Inf+) -> X debe ser 1")
+    @DisplayName("[Init] X = " + (CERO + 1) + " (Límite Inf+) -> X debe ser " + (CERO + 1))
     void testInitAlienBomb_XEncimaLimiteInferior_DebeSerUno() {
         Alien alien = new Alien(CERO + 1, Y_NOMINAL);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(CERO + 1, alienBomb.getX());
-        assertEquals(Y_NOMINAL, alienBomb.getY());
+        assertEquals(CERO + 1, alienBomb.getX(), "X debe ser el límite inferior más uno " + (CERO + 1));
+        assertEquals(Y_NOMINAL, alienBomb.getY(), "Y debe mantener su valor nominal");
     }
 
     /**
@@ -69,12 +67,12 @@ class AlienBombTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X = MAX-1 (Límite Sup-) -> X debe ser MAX-1")
+    @DisplayName("[Init] X = " + (ANCHO - 1) + " (Límite Sup-) -> X debe ser " + (ANCHO - 1))
     void testInitAlienBomb_XDebajoLimiteSuperior_DebeSerMaxMenosUno() {
         Alien alien = new Alien(ANCHO - 1, Y_NOMINAL);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(ANCHO - 1, alienBomb.getX());
-        assertEquals(Y_NOMINAL, alienBomb.getY());
+        assertEquals(ANCHO - 1, alienBomb.getX(), "X debe ser el límite superior menos uno " + (ANCHO - 1));
+        assertEquals(Y_NOMINAL, alienBomb.getY(), "Y debe mantener su valor nominal");
     }
 
     /**
@@ -83,12 +81,12 @@ class AlienBombTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X = MAX (Límite Sup) -> X debe ser MAX")
+    @DisplayName("[Init] X = " + ANCHO + " (Límite Sup) -> X debe ser " + ANCHO)
     void testInitAlienBomb_XEnLimiteSuperior_DebeSerMax() {
         Alien alien = new Alien(ANCHO, Y_NOMINAL);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(ANCHO, alienBomb.getX());
-        assertEquals(Y_NOMINAL, alienBomb.getY());
+        assertEquals(ANCHO, alienBomb.getX(), "X debe ser el límite superior " + ANCHO);
+        assertEquals(Y_NOMINAL, alienBomb.getY(), "Y debe mantener su valor nominal");
     }
 
     /**
@@ -97,11 +95,11 @@ class AlienBombTest {
      * Y = nominal
      */
     @Test
-    @DisplayName("[Init] X > MAX (Robusto) -> X debe ajustarse a MAX")
+    @DisplayName("[Init] X = " + (ANCHO + 1) + " (Robusto) -> X debe ajustarse a " + ANCHO)
     void testInitAlienBomb_XEncimaLimiteSuperior_DebeAproximarseAMax() {
         Alien alien = new Alien(ANCHO + 1, Y_NOMINAL);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(ANCHO, alienBomb.getX(), "X debe ajustarse al límite superior ANCHO");
+        assertEquals(ANCHO, alienBomb.getX(), "X debe ajustarse al límite superior " + ANCHO);
         assertEquals(Y_NOMINAL, alienBomb.getY(), "Y debe mantener su valor nominal");
     }
 
@@ -113,12 +111,12 @@ class AlienBombTest {
      * Y = min- (-1)
      */
     @Test
-    @DisplayName("[Init] Y < 0 (Robusto) -> Y debe ajustarse a 0")
+    @DisplayName("[Init] Y = " + (CERO - 1) + " (Robusto) -> Y debe ajustarse a " + CERO)
     void testInitAlienBomb_YDebajoLimiteInferior_DebeAproximarseACero() {
         Alien alien = new Alien(X_NOMINAL, -1);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
         assertEquals(X_NOMINAL, alienBomb.getX(), "X debe mantener su valor nominal");
-        assertEquals(CERO, alienBomb.getY(), "Y debe ajustarse al límite inferior CERO");
+        assertEquals(CERO, alienBomb.getY(), "Y debe ajustarse al límite inferior " + CERO);
     }
 
     /**
@@ -127,12 +125,12 @@ class AlienBombTest {
      * Y = min (0)
      */
     @Test
-    @DisplayName("[Init] Y = 0 (Límite Inf) -> Y debe ser 0")
+    @DisplayName("[Init] Y = " + CERO + " (Límite Inf) -> Y debe ser " + CERO)
     void testInitAlienBomb_YEnLimiteInferior_DebeSerCero() {
         Alien alien = new Alien(X_NOMINAL, CERO);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(X_NOMINAL, alienBomb.getX());
-        assertEquals(CERO, alienBomb.getY());
+        assertEquals(X_NOMINAL, alienBomb.getX(), "X debe mantener su valor nominal");
+        assertEquals(CERO, alienBomb.getY(), "Y debe ser el límite inferior " + CERO);
     }
 
     /**
@@ -141,12 +139,12 @@ class AlienBombTest {
      * Y = min+ (1)
      */
     @Test
-    @DisplayName("[Init] Y = 1 (Límite Inf+) -> Y debe ser 1")
+    @DisplayName("[Init] Y = " + (CERO + 1) + " (Límite Inf+) -> Y debe ser " + (CERO + 1))
     void testInitAlienBomb_YEncimaLimiteInferior_DebeSerUno() {
         Alien alien = new Alien(X_NOMINAL, CERO + 1);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(X_NOMINAL, alienBomb.getX());
-        assertEquals(CERO + 1, alienBomb.getY());
+        assertEquals(X_NOMINAL, alienBomb.getX(), "X debe mantener su valor nominal");
+        assertEquals(CERO + 1, alienBomb.getY(), "Y debe ser el límite inferior más uno " + (CERO + 1));
     }
 
     /**
@@ -155,12 +153,12 @@ class AlienBombTest {
      * Y = max- (ALTO - 1)
      */
     @Test
-    @DisplayName("[Init] Y = MAX-1 (Límite Sup-) -> Y debe ser MAX-1")
+    @DisplayName("[Init] Y = " + (ALTO - 1) + " (Límite Sup-) -> Y debe ser " + (ALTO - 1))
     void testInitAlienBomb_YDebajoLimiteSuperior_DebeSerMaxMenosUno() {
         Alien alien = new Alien(X_NOMINAL, ALTO - 1);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(X_NOMINAL, alienBomb.getX());
-        assertEquals(ALTO - 1, alienBomb.getY());
+        assertEquals(X_NOMINAL, alienBomb.getX(), "X debe mantener su valor nominal");
+        assertEquals(ALTO - 1, alienBomb.getY(), "Y debe ser el límite superior menos uno " + (ALTO - 1));
     }
 
     /**
@@ -169,12 +167,12 @@ class AlienBombTest {
      * Y = max (ALTO)
      */
     @Test
-    @DisplayName("[Init] Y = MAX (Límite Sup) -> Y debe ser MAX")
+    @DisplayName("[Init] Y = " + ALTO + " (Límite Sup) -> Y debe ser " + ALTO)
     void testInitAlienBomb_YEnLimiteSuperior_DebeSerMax() {
         Alien alien = new Alien(X_NOMINAL, ALTO);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(X_NOMINAL, alienBomb.getX());
-        assertEquals(ALTO, alienBomb.getY());
+        assertEquals(X_NOMINAL, alienBomb.getX(), "X debe mantener su valor nominal");
+        assertEquals(ALTO, alienBomb.getY(), "Y debe ser el límite superior " + ALTO);
     }
 
     /**
@@ -183,12 +181,12 @@ class AlienBombTest {
      * Y = max+ (ALTO + 1)
      */
     @Test
-    @DisplayName("[Init] Y > MAX (Robusto) -> Y debe ajustarse a MAX")
+    @DisplayName("[Init] Y = " + (ALTO + 1) + " (Robusto) -> Y debe ajustarse a " + ALTO)
     void testInitAlienBomb_YEncimaLimiteSuperior_DebeAproximarseAMax() {
         Alien alien = new Alien(X_NOMINAL, ALTO + 1);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
         assertEquals(X_NOMINAL, alienBomb.getX(), "X debe mantener su valor nominal");
-        assertEquals(ALTO, alienBomb.getY(), "Y debe ajustarse al límite superior ALTO");
+        assertEquals(ALTO, alienBomb.getY(), "Y debe ajustarse al límite superior " + ALTO);
     }
 
     // --- Caso de Prueba Central (El "+1" en 6n+1) ---
@@ -203,8 +201,8 @@ class AlienBombTest {
     void testInitAlienBomb_XYNominal_DebeSerXY() {
         Alien alien = new Alien(X_NOMINAL, Y_NOMINAL);
         Alien.Bomb alienBomb = alien.new Bomb(alien.getX(), alien.getY());
-        assertEquals(X_NOMINAL, alienBomb.getX());
-        assertEquals(Y_NOMINAL, alienBomb.getY());
+        assertEquals(X_NOMINAL, alienBomb.getX(), "X debe mantener su valor nominal");
+        assertEquals(Y_NOMINAL, alienBomb.getY(), "Y debe mantener su valor nominal");
     }
 
 }
