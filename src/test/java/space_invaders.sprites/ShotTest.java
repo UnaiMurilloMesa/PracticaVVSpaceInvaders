@@ -1,32 +1,43 @@
 package space_invaders.sprites;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ShotTest {
+
+
+    // ------------------------------------------------TESTS CAJA NEGRA------------------------------------------------
+
+
+    /**
+     * Test para comprobar que no se crea un objeto vacío
+     */
     @Test
     void testShotIsNotNull() {
         Shot shot = new Shot();
-        assertNotNull(shot);
+
+        assertNotNull(shot, "Shot no debería ser null");
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "357, 349",
-            "358, 350",
-            "359, 351",
-            "179, 175",
-            "1, 1",
-            "0, 0",
-            "-1, -1"
-    })
-    void testShotConstructor(int x, int y) {
+    /**
+     * Test para verificar que las coordenadas de un nuevo objeto Shot son las correctas.
+     * Como no se especifican restricciones en la documentación, se establecen parámetros dentro de los límites,
+     * como fue acordado con el profesor
+     * También se detecta si la imagen es null o no
+     */
+    @Test
+    void testShotConstructor() {
+        int x, y; x = y = 250;
         Shot shot = new Shot(x, y);
+
+        // Ajustamos los valores como indica la documentación del método initShot()
         int expectedX = x + 6;
         int expectedY = y - 1;
 
@@ -35,5 +46,39 @@ public class ShotTest {
         assertEquals(expectedY, shot.getY(), "La posición de Shot debería ser " + expectedY);
     }
 
-    //TODO Por qué suma 6 a 'x' y resta 1 a 'y', hay límites negativos?
+    /**
+     * Comprobar el método primado de la clase Shot
+     */
+    @Test
+    void testInitShot() {
+        Shot shot = new Shot();
+        try {
+            // Accedemos al método de la clase Shot
+            Method method = Shot.class.getDeclaredMethod("initShot", int.class, int.class);
+            method.setAccessible(true);
+
+            int x, y; x = y = 250;
+            method.invoke(shot, x, y);
+
+            // Accedemos a los atributos
+            int valorx = shot.getX();
+            int valory = shot.getY();
+
+            // Ajustamos los valores como indica la documentación del método initShot()
+            int expectedX = x + 6;
+            int expectedY = y - 1;
+
+            // Comprobamos que el efecto es el deseado
+            assertTrue((valorx == expectedX) && (valory == expectedY));
+
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

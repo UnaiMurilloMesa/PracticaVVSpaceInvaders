@@ -3,10 +3,15 @@ package space_invaders.sprites;
 import main.Commons;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.BeforeParameterizedClassInvocation;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.awt.*;
+import java.lang.reflect.Field;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerTest {
@@ -19,6 +24,7 @@ public class PlayerTest {
         player = new Player();
     }
 
+    //CAJA NEGRA
     //tests para Player() y initPlayer()
     @Test
     public void testConstructor_InitialState_Visibility() {
@@ -72,9 +78,9 @@ public class PlayerTest {
     //tests para los límites izquierdo en act()
     @ParameterizedTest
     @CsvSource({
-            "7, -2, " + Commons.BORDER_LEFT,
+            "6, -2, " + Commons.BORDER_LEFT,
             "5, -2, " + Commons.BORDER_LEFT,
-            "3, -2, " + Commons.BORDER_LEFT
+            "4, -2, " + Commons.BORDER_LEFT
     })
     void testAct_LeftBoundary(int initialX, int dx, int expectedX) {
         player.setX(initialX);
@@ -104,5 +110,47 @@ public class PlayerTest {
         assertEquals(rightLimit, player.getX(), "El jugador no debe pasar el borde derecho");
     }
 
+    //CAJA BLANCA
+    //tests para Player() y initPlayer()
+    @Test
+    public void testConstructor_InitPlayer_ExecutionPath() throws Exception {
+        assertNotNull(player, "El objeto Player debería haberse creado correctamente");
 
+        Image image = player.getImage();
+        assertNotNull(image, "La imagen del jugador debería haberse cargado correctamente");
+
+        Field width = player.getClass().getDeclaredField("width");
+        width.setAccessible(true);
+        int widthValue = (int) width.get(player);
+        assertEquals(image.getWidth(null), widthValue, "El atributo 'width' debe coincidir con el ancho de la imagen cargada");
+
+        assertEquals(179, player.getX(), "La posición X inicial debería ser 179");
+        assertEquals(280, player.getY(), "La posición Y inicial debería ser 280");
+
+        assertTrue(player.isVisible());
+
+    }
+    //tests para act()
+    @ParameterizedTest
+    @CsvSource({
+            "100, 2, 102", //C1. Movimiento dentro de los límites
+            "1, -2, 2", //C2. Límite izquierdo
+            "400, 2, -1" //C3. Límite derecho
+    })
+    void testAct_ExecutionPaths(int initialX, int dx, int expectedX) throws Exception {
+        player.setX(initialX);
+        player.dx = dx;
+
+        Field widthField = player.getClass().getDeclaredField("width");
+        widthField.setAccessible(true);
+        int width = (int) widthField.get(player);
+
+        if (expectedX == -1){
+            expectedX = 358 + 2 * width;
+        }
+
+        player.act();
+
+        assertEquals(expectedX, player.getX(), "El jugador debería moverse correctamente según dx y respetar los límites del tablero");
+    }
 }
