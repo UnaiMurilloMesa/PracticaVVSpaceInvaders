@@ -26,14 +26,12 @@ public class BoardInitTest {
         init.invoke(board);
     }
 
-
     @Test
-    @DisplayName("No duplica entidades si se llama dos veces")
-    void shouldNotDuplicateEntitiesOnDoubleInit() throws Exception {
-        invokePrivateMethod();
+    @DisplayName("Añade 24 aliens al iniciar la partida")
+    void shouldCreate24AliensOnInit() throws Exception {
         invokePrivateMethod();
 
-        assertEquals(Commons.ALIEN_ROWS * Commons.ALIEN_COLUMNS, board.getAliens().size(), "La lista de aliens no debe duplicarse al reiniciar");
+        assertEquals(Commons.ALIEN_ROWS * Commons.ALIEN_COLUMNS, board.getAliens().size());
     }
 
     @Test
@@ -70,18 +68,20 @@ public class BoardInitTest {
     }
 
     @Test
-    @DisplayName("El jugador debe inicializarse al iniciar el juego")
+    @DisplayName("Los elementos deben inicializarse al iniciar el juego")
     void shouldCreatePlayer() throws Exception {
         invokePrivateMethod();
 
         assertNotNull(board.getPlayer(), "El jugador debe existir");
+        assertNotNull(board.getShot(), "El disparo debe existir");
     }
 
     @Test
-    @DisplayName("El shot debe inicializarse al iniciar el juego")
-    void shouldCreateShot() throws Exception {
+    @DisplayName("No duplica entidades si se llama dos veces")
+    void shouldNotDuplicateEntitiesOnDoubleInit() throws Exception {
+        invokePrivateMethod();
         invokePrivateMethod();
 
-        assertNotNull(board.getShot(), "El shot debe existir");
+        assertEquals(Commons.ALIEN_ROWS * Commons.ALIEN_COLUMNS, board.getAliens().size(), "La lista de aliens no debe duplicarse al reiniciar");
     }
 }

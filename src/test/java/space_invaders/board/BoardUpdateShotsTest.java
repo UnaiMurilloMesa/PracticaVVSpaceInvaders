@@ -31,21 +31,8 @@ public class BoardUpdateShotsTest {
     }
 
     @Test
-    @DisplayName("Disparo visible sin colision en alien")
-    void shouldMoveUpWhenVisibleNoCollision() throws Exception {
-        int lastY = 100;
-
-        board.getShot().setY(lastY);
-
-        invokePrivateUpdateShot();
-
-        assertEquals(lastY + Commons.SHOT_SPEED, board.getShot().getY());
-        assertEquals(0, board.getDeaths());
-    }
-
-    @Test
-    @DisplayName("Disparo visible alcanza alien")
-    void shotShouldKillAlienWhenCollision() throws Exception {
+    @DisplayName("Disparo visible colisiona al alien por el limite izquierdo")
+    void shotShouldKillAlienWhenCollisionLeft() throws Exception {
         board.getShot().setX(30);
         board.getShot().setY(30);
 
@@ -56,23 +43,64 @@ public class BoardUpdateShotsTest {
     }
 
     @Test
-    @DisplayName("Disparo cerca del borde superior debe desaparecer")
-    void shotShouldDisappearSuperiorWhenGetsOut() throws Exception {
-        board.getShot().setY(Commons.BOARD_HEIGHT);
+    @DisplayName("Disparo visible colisiona al alien por el limite derecho")
+    void shotShouldKillAlienWhenCollisionRight() throws Exception {
+        board.getShot().setX(42);
+        board.getShot().setY(42);
 
         invokePrivateUpdateShot();
 
-        assertTrue(board.getShot().isDying());
+        assertTrue(board.getAliens().get(0).isVisible());
+        assertTrue(board.getDeaths() > 0);
     }
 
     @Test
-    @DisplayName("Disparo invisible no debe hacer nada")
-    void invisibleShotShouldDie() throws Exception {
-        board.getShot().setX(Commons.BOARD_WIDTH);
-        board.getShot().setY(Commons.BOARD_HEIGHT);
+    @DisplayName("Disparo visible en movimiento sin colision")
+    void shouldMoveUpWhenNoCollision() throws Exception {
+        int lastX = 100;
+        int lastY = 100;
+
+        board.getShot().setX(lastX);
+        board.getShot().setY(lastY);
 
         invokePrivateUpdateShot();
 
-        assertTrue(board.getShot().isDying());
+        assertEquals(lastY - Commons.SHOT_SPEED, board.getShot().getY());
+        assertEquals(lastX, board.getShot().getX());
+        assertEquals(0, board.getDeaths());
+    }
+
+    @Test
+    @DisplayName("Disparo cerca del borde superior debe desaparecer")
+    void shotShouldDisappearWhenGetsOut() throws Exception {
+        board.getShot().setX(100);
+        board.getShot().setY(1);
+
+        invokePrivateUpdateShot();
+
+        assertFalse(board.getShot().isVisible());
+    }
+
+    @Test
+    @DisplayName("Disparo no visible")
+    void invisibleShotShouldDoNothing() throws Exception {
+        board.getShot().setX(100);
+        board.getShot().setY(1);
+
+        invokePrivateUpdateShot();
+
+        assertFalse(board.getShot().isVisible());
+    }
+
+    @Test
+    @DisplayName("Disparo visible colisiona a un alien ya muerto")
+    void shotGetsDeadAlien() throws Exception {
+        board.getShot().setX(30);
+        board.getShot().setY(30);
+        board.getAliens().get(0).die();
+
+        invokePrivateUpdateShot();
+
+        assertTrue(board.getDeaths() == 0);
     }
 }
