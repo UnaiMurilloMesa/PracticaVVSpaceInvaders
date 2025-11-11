@@ -12,6 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ShotTest {
 
+
+    // ------------------------------------------------TESTS CAJA NEGRA------------------------------------------------
+
+
     /**
      * Test para comprobar que no se crea un objeto vacío
      */
@@ -48,7 +52,6 @@ public class ShotTest {
     @Test
     void testInitShot() {
         Shot shot = new Shot();
-
         try {
             // Accedemos al método de la clase Shot
             Method method = Shot.class.getDeclaredMethod("initShot", int.class, int.class);
@@ -58,13 +61,8 @@ public class ShotTest {
             method.invoke(shot, x, y);
 
             // Accedemos a los atributos
-            Field valx = Sprite.class.getDeclaredField("x");
-            valx.setAccessible(true);
-            int valorx = (int) valx.get(shot);
-
-            Field valy = Sprite.class.getDeclaredField("y");
-            valy.setAccessible(true);
-            int valory = (int) valy.get(shot);
+            int valorx = shot.getX();
+            int valory = shot.getY();
 
             // Ajustamos los valores como indica la documentación del método initShot()
             int expectedX = x + 6;
