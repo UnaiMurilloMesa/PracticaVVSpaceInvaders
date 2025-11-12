@@ -4,18 +4,18 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ShotTest {
 
 
-    // ------------------------------------------------TESTS CAJA NEGRA------------------------------------------------
+    // ------------------------------------------------ TESTS CAJA NEGRA ------------------------------------------------
 
 
     /**
-     * Test para comprobar que no se crea un objeto vacío
+     * Test para comprobar que no se crea un objeto vacío con el constructor sin parámetros
      */
     @Test
     void testShotIsNotNull() {
@@ -25,17 +25,51 @@ public class ShotTest {
     }
 
     /**
+     * Test para verificar que se establece una imagen al crear un objeto Shot
+     */
+    @Test
+    void testImagenShot() {
+        int x, y; x = y = 250;
+        Shot shot = new Shot(x, y);
+
+        assertNotNull(shot.getImage(), "La imagen de Shot no debería de ser null");
+    }
+
+    /**
      * Test para verificar que las coordenadas de un nuevo objeto Shot son las correctas.
      * Como no se especifican restricciones en la documentación, se establecen parámetros dentro de los límites,
      * como fue acordado con el profesor
-     * También se detecta si la imagen es null o no
      */
     @Test
-    void testShotConstructor() {
+    void testCoordenadasShot() {
         int x, y; x = y = 250;
         Shot shot = new Shot(x, y);
 
         // Ajustamos los valores como indica la documentación del método initShot()
+        int expectedX = x + 6;
+        int expectedY = y - 1;
+
+        assertEquals(expectedX, shot.getX(), "La posición de Shot debería ser " + expectedX);
+        assertEquals(expectedY, shot.getY(), "La posición de Shot debería ser " + expectedY);
+    }
+
+
+    // ------------------------------------------------ TESTS CAJA BLANCA -----------------------------------------------
+
+
+    /**
+     * Test de cobertura de líneas del Constructor vacío
+     */
+    @Test
+    void testConstructorSinParametrosNoLanzaErrores() {
+        assertDoesNotThrow(() -> new Shot());
+    }
+
+    @Test
+    void testConstructorConParametros() {
+        int x, y; x = y = 250;
+        Shot shot = new Shot(x, y);
+
         int expectedX = x + 6;
         int expectedY = y - 1;
 
@@ -45,7 +79,7 @@ public class ShotTest {
     }
 
     /**
-     * Comprobar el método primado de la clase Shot
+     * Comprobar el método privado de la clase Shot
      */
     @Test
     void testInitShot() {
@@ -67,7 +101,8 @@ public class ShotTest {
             int expectedY = y - 1;
 
             // Comprobamos que el efecto es el deseado
-            assertTrue((valorx == expectedX) && (valory == expectedY));
+            assertEquals(expectedX, valorx, "La posición de Shot debería ser " + expectedX);
+            assertEquals(expectedY, valory, "La posición de Shot debería ser " + expectedY);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
