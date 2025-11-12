@@ -31,7 +31,8 @@ public class BoardInitTest {
     void shouldCreate24AliensOnInit() throws Exception {
         invokePrivateMethod();
 
-        assertEquals(Commons.ALIEN_ROWS * Commons.ALIEN_COLUMNS, board.getAliens().size());
+        assertTrue(board.isInGame(), "El juego debe iniciarse");
+        assertEquals(Commons.ALIEN_ROWS * Commons.ALIEN_COLUMNS, board.getAliens().size(), "Debe haber 24 aliens al iniciar");
     }
 
     @Test
@@ -45,12 +46,12 @@ public class BoardInitTest {
         int x = firstAlien.getX();
         int y = firstAlien.getY();
 
-        assertEquals(Commons.ALIEN_INIT_X, x);
-        assertEquals(Commons.ALIEN_INIT_Y, y);
+        assertEquals(Commons.ALIEN_INIT_X, x, "La posicion X del primer alien debe ser correcta");
+        assertEquals(Commons.ALIEN_INIT_Y, y, "La posicion Y del primer alien debe ser correcta");
     }
 
     @Test
-    @DisplayName("Ultimo alien inicializado en la posicion limite esperada de la matriz")
+    @DisplayName("Ultimo alien inicializado en la posicion esperada de la matriz")
     void shouldCreateLastAlienAtExpectedBoundary() throws Exception {
         invokePrivateMethod();
 
@@ -63,8 +64,8 @@ public class BoardInitTest {
         int expectedX = Commons.ALIEN_INIT_X + (Commons.ALIEN_COLUMNS - 1) * Commons.ALIEN_SEPARATOR;
         int expectedY = Commons.ALIEN_INIT_Y + (Commons.ALIEN_ROWS - 1) * Commons.ALIEN_SEPARATOR;
 
-        assertEquals(expectedX, x);
-        assertEquals(expectedY, y);
+        assertEquals(expectedX, x, "La posicion X del ultimo alien debe ser correcta");
+        assertEquals(expectedY, y, "La posicion Y del ultimo alien debe ser correcta");
     }
 
     @Test
@@ -72,8 +73,8 @@ public class BoardInitTest {
     void shouldCreatePlayer() throws Exception {
         invokePrivateMethod();
 
-        assertNotNull(board.getPlayer(), "El jugador debe existir");
-        assertNotNull(board.getShot(), "El disparo debe existir");
+        assertNotNull(board.getPlayer(), "El jugador debe instanciarse");
+        assertNotNull(board.getShot(), "El disparo debe instanciarse");
     }
 
     @Test

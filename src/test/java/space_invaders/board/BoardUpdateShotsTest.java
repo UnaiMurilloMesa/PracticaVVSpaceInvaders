@@ -38,8 +38,8 @@ public class BoardUpdateShotsTest {
 
         invokePrivateUpdateShot();
 
-        assertTrue(board.getAliens().get(0).isVisible());
-        assertTrue(board.getDeaths() > 0);
+        assertTrue(board.getAliens().get(0).isVisible(), "El alien debe ser visible para ser eliminado");
+        assertTrue(board.getDeaths() > 0, "Si un alien es eliminado debe aumentar el marcador");
     }
 
     @Test
@@ -50,8 +50,8 @@ public class BoardUpdateShotsTest {
 
         invokePrivateUpdateShot();
 
-        assertTrue(board.getAliens().get(0).isVisible());
-        assertTrue(board.getDeaths() > 0);
+        assertTrue(board.getAliens().get(0).isVisible(), "El alien debe ser visible para ser eliminado");
+        assertTrue(board.getDeaths() > 0, "Si un alien es eliminado debe aumentar el marcador");
     }
 
     @Test
@@ -65,9 +65,9 @@ public class BoardUpdateShotsTest {
 
         invokePrivateUpdateShot();
 
-        assertEquals(lastY - Commons.SHOT_SPEED, board.getShot().getY());
-        assertEquals(lastX, board.getShot().getX());
-        assertEquals(0, board.getDeaths());
+        assertEquals(lastY - Commons.SHOT_SPEED, board.getShot().getY(), "Las coordenadas Y deben disminuir");
+        assertEquals(lastX, board.getShot().getX(), "Las coordenadas X deben mantenerse durante todo su recorrido");
+        assertEquals(0, board.getDeaths(), "Si no se ha eliminado ningun alien el marcador de muertes debe mantenerse a cero");
     }
 
     @Test
@@ -78,18 +78,7 @@ public class BoardUpdateShotsTest {
 
         invokePrivateUpdateShot();
 
-        assertFalse(board.getShot().isVisible());
-    }
-
-    @Test
-    @DisplayName("Disparo no visible")
-    void invisibleShotShouldDoNothing() throws Exception {
-        board.getShot().setX(100);
-        board.getShot().setY(1);
-
-        invokePrivateUpdateShot();
-
-        assertFalse(board.getShot().isVisible());
+        assertFalse(board.getShot().isVisible(), "El disparo no debe ser visible en esa posicion");
     }
 
     @Test
@@ -101,6 +90,6 @@ public class BoardUpdateShotsTest {
 
         invokePrivateUpdateShot();
 
-        assertTrue(board.getDeaths() == 0);
+        assertTrue(board.getDeaths() == 0, "Si el alien ya esta muerto no debe aumentar el marcador");
     }
 }
