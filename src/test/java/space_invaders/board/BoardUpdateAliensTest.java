@@ -27,6 +27,20 @@ public class BoardUpdateAliensTest {
         updateAliensMethod.invoke(board);
     }
 
+    // CAJA NEGRA ->
+    @Test
+    @DisplayName("Alien por debajo de GROUND activa invasión")
+    void shouldTriggerInvasionWhenAlienPassesYlimit() throws Exception {
+        Alien alien = new Alien(20, Commons.GROUND + Commons.ALIEN_HEIGHT);
+        board.setAliens(List.of(alien));
+
+        invokePrivateUpdateAliens();
+
+        assertFalse(board.isInGame(), "El juego debe terminar si hay invasión");
+        assertEquals("Invasion!", board.getMessage(), "El mensaje del juego debe ser el de Invasión");
+    }
+
+    // CAJA BLANCA ->
     @Test
     @DisplayName("Alien alcanza el borde derecho cambia dirección a -1 y baja")
     void shouldChangeDirectionToLeftWhenAtRightLimit() throws Exception {
@@ -55,18 +69,6 @@ public class BoardUpdateAliensTest {
 
         assertEquals(1, board.getDirection(), "El alien debe ir hacia la derecha");
         assertEquals(yBefore + Commons.GO_DOWN, alien.getY(),"El alien debe haber bajado Commons.GO_DOWN pixeles");
-    }
-
-    @Test
-    @DisplayName("Alien por debajo de GROUND activa invasión")
-    void shouldTriggerInvasionWhenAlienPassesYlimit() throws Exception {
-        Alien alien = new Alien(20, Commons.GROUND + Commons.ALIEN_HEIGHT);
-        board.setAliens(List.of(alien));
-
-        invokePrivateUpdateAliens();
-
-        assertFalse(board.isInGame(), "El juego debe terminar si hay invasión");
-        assertEquals("Invasion!", board.getMessage(), "El mensaje del juego debe ser el de Invasión");
     }
 
     @Test

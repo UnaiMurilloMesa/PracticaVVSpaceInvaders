@@ -29,6 +29,10 @@ public class BoardUpdateBombTest {
         updateBombMethod.invoke(board);
     }
 
+    // CAJA NEGRA ->
+    
+
+    // CAJA BLANCA ->
     @Test
     @DisplayName("Se crea una bomba para un alien sin bomba activa")
     void shouldCreateBombForVisibleAlienWithoutActiveBomb() throws Exception {
