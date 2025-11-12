@@ -38,8 +38,8 @@ public class BoardUpdateAliensTest {
         int yBefore = alien.getY();
         invokePrivateUpdateAliens();
 
-        assertEquals(-1, board.getDirection());
-        assertEquals(yBefore + Commons.GO_DOWN, alien.getY());
+        assertEquals(-1, board.getDirection(), "El alien debe ir hacia la izquierda");
+        assertEquals(yBefore + Commons.GO_DOWN, alien.getY(), "El alien debe haber bajado Commons.GO_DOWN pixeles");
     }
 
     @Test
@@ -53,20 +53,20 @@ public class BoardUpdateAliensTest {
         int yBefore = alien.getY();
         invokePrivateUpdateAliens();
 
-        assertEquals(1, board.getDirection());
-        assertEquals(yBefore + Commons.GO_DOWN, alien.getY());
+        assertEquals(1, board.getDirection(), "El alien debe ir hacia la derecha");
+        assertEquals(yBefore + Commons.GO_DOWN, alien.getY(),"El alien debe haber bajado Commons.GO_DOWN pixeles");
     }
 
     @Test
     @DisplayName("Alien por debajo de GROUND activa invasión")
     void shouldTriggerInvasionWhenAlienPassesYlimit() throws Exception {
-        Alien alien = new Alien(100, Commons.GROUND + Commons.ALIEN_HEIGHT);
+        Alien alien = new Alien(20, Commons.GROUND + Commons.ALIEN_HEIGHT);
         board.setAliens(List.of(alien));
 
         invokePrivateUpdateAliens();
 
-        assertFalse(board.isInGame());
-        assertEquals("Invasion!", board.getMessage());
+        assertFalse(board.isInGame(), "El juego debe terminar si hay invasión");
+        assertEquals("Invasion!", board.getMessage(), "El mensaje del juego debe ser el de Invasión");
     }
 
     @Test
@@ -81,8 +81,8 @@ public class BoardUpdateAliensTest {
         board.setDirection(1);
         invokePrivateUpdateAliens();
 
-        assertTrue(initialX < alien.getX());
-        assertEquals(initialY, alien.getY()); // no se debe mover en vertical
+        assertTrue(initialX < alien.getX(), "El alien debe moverse hacia la derecha si la dirección es 1");
+        assertEquals(initialY, alien.getY(), "El alien no debe moverse en vertical");
     }
 
     @Test
@@ -97,7 +97,7 @@ public class BoardUpdateAliensTest {
         board.setDirection(-1);
         invokePrivateUpdateAliens();
 
-        assertTrue(initialX > alien.getX());
-        assertEquals(initialY, alien.getY()); // no se debe mover en vertical
+        assertTrue(initialX > alien.getX(), "EL alien debe moverse a la izquierda si la posicion es -1");
+        assertEquals(initialY, alien.getY(), "El alien no debe moverse en vertical");
     }
 }
