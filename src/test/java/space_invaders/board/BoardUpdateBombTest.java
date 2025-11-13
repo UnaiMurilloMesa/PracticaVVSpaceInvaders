@@ -30,7 +30,62 @@ public class BoardUpdateBombTest {
     }
 
     // CAJA NEGRA ->
-    
+    @Test
+    @DisplayName("El jugador se destruye al colisionar con la bomba en el borde derecho")
+    void shouldDestroyPlayerOnRightEdgeCollision() throws Exception {
+        Alien alien = new Alien(20, 100);
+        Alien.Bomb bomb = alien.getBomb();
+
+        bomb.setDestroyed(false);
+        Player player = new Player();
+        bomb.setX(player.getX() + Commons.PLAYER_WIDTH);
+        bomb.setY(player.getY() + Commons.PLAYER_HEIGHT);
+        board.setAliens(List.of(alien));
+        board.setPlayer(player);
+
+        invokeUpdateBomb();
+
+        assertTrue(player.isDying(), "El jugador debería morir tras la colisión en el borde derecho");
+        assertTrue(bomb.isDestroyed(), "La bomba debería destruirse después de impactar al jugador");
+    }
+
+    @Test
+    @DisplayName("El jugador se destruye al colisionar con la bomba en el borde izquierdo")
+    void shouldDestroyPlayerOnLeftEdgeCollision() throws Exception {
+        Alien alien = new Alien(20, 100);
+        Alien.Bomb bomb = alien.getBomb();
+
+        bomb.setDestroyed(false);
+        Player player = new Player();
+        bomb.setX(player.getX());
+        bomb.setY(player.getY());
+        board.setAliens(List.of(alien));
+        board.setPlayer(player);
+
+        invokeUpdateBomb();
+
+        assertTrue(player.isDying(), "El jugador debería morir tras la colisión en el borde izquierdo");
+        assertTrue(bomb.isDestroyed(), "La bomba debería destruirse inmediatamente después de impactar al jugador");
+    }
+
+    @Test
+    @DisplayName("El jugador no se destruye fuera de los límites de colisión")
+    void shouldNotDestroyPlayerWhenOutsideBounds() throws Exception {
+        Alien alien = new Alien(100, 50);
+        Alien.Bomb bomb = alien.getBomb();
+
+        bomb.setDestroyed(false);
+        Player player = new Player();
+        bomb.setX(player.getX() + Commons.PLAYER_WIDTH + 5);
+        bomb.setY(player.getY() + Commons.PLAYER_HEIGHT + 5);
+        board.setAliens(List.of(alien));
+        board.setPlayer(player);
+
+        invokeUpdateBomb();
+
+        assertFalse(player.isDying(), "El jugador no debería morir si no hay colisión");
+        assertFalse(bomb.isDestroyed(), "La bomba no debería destruirse si no impacta al jugador");
+    }
 
     // CAJA BLANCA ->
     @Test

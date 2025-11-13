@@ -27,7 +27,7 @@ public class BoardUpdateAliensTest {
         updateAliensMethod.invoke(board);
     }
 
-    // CAJA NEGRA ->
+    // CAJA BLANCA ->
     @Test
     @DisplayName("Alien por debajo de GROUND activa invasión")
     void shouldTriggerInvasionWhenAlienPassesYlimit() throws Exception {
@@ -40,7 +40,6 @@ public class BoardUpdateAliensTest {
         assertEquals("Invasion!", board.getMessage(), "El mensaje del juego debe ser el de Invasión");
     }
 
-    // CAJA BLANCA ->
     @Test
     @DisplayName("Alien alcanza el borde derecho cambia dirección a -1 y baja")
     void shouldChangeDirectionToLeftWhenAtRightLimit() throws Exception {
