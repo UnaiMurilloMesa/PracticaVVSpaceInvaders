@@ -55,10 +55,10 @@ public class BoardUpdateShotsTest {
     }
 
     @Test
-    @DisplayName("Disparo visible en movimiento sin colision")
-    void shouldMoveUpWhenNoCollision() throws Exception {
-        int lastX = 100;
-        int lastY = 100;
+    @DisplayName("Disparo justo fuera del rango de colisión no debe matar al alien (izquierda)")
+    void shotJustOutsideCollisionLeft() throws Exception {
+        int lastX = 29;
+        int lastY = 30;
 
         board.getShot().setX(lastX);
         board.getShot().setY(lastY);
@@ -67,7 +67,23 @@ public class BoardUpdateShotsTest {
 
         assertEquals(lastY - Commons.SHOT_SPEED, board.getShot().getY(), "Las coordenadas Y deben disminuir");
         assertEquals(lastX, board.getShot().getX(), "Las coordenadas X deben mantenerse durante todo su recorrido");
-        assertEquals(0, board.getDeaths(), "Si no se ha eliminado ningun alien el marcador de muertes debe mantenerse a cero");
+        assertEquals(0, board.getDeaths());
+    }
+
+    @Test
+    @DisplayName("Disparo justo fuera del rango de colisión no debe matar al alien (derecha)")
+    void shotJustOutsideCollisionRight() throws Exception {
+        int lastX = 43;
+        int lastY = 30;
+
+        board.getShot().setX(lastX);
+        board.getShot().setY(lastY);
+
+        invokePrivateUpdateShot();
+
+        assertEquals(lastY - Commons.SHOT_SPEED, board.getShot().getY(), "Las coordenadas Y deben disminuir");
+        assertEquals(lastX, board.getShot().getX(), "Las coordenadas X deben mantenerse durante todo su recorrido");
+        assertEquals(0, board.getDeaths());
     }
 
     @Test

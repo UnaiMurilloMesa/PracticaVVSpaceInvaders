@@ -70,7 +70,7 @@ public class BoardInitTest {
 
     @Test
     @DisplayName("Los elementos deben inicializarse al iniciar el juego")
-    void shouldCreatePlayer() throws Exception {
+    void shouldCreateElements() throws Exception {
         invokePrivateMethod();
 
         assertNotNull(board.getPlayer(), "El jugador debe instanciarse");
