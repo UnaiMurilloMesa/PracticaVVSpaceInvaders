@@ -325,7 +325,7 @@ class AlienTest {
     }
 
     @Test
-    @DisplayName("[Caja Blanca - Init] Camino 5 -> X=" + X_NOMINAL + ", Y=" + ALTO + 1)
+    @DisplayName("[Caja Blanca - Init] Camino 5 -> X=" + X_NOMINAL + ", Y=" + (ALTO + 1))
     void testCajaBlanca_InitAlien_Camino5() {
         Alien alien = new Alien(X_NOMINAL, (ALTO + 1));
 
@@ -338,7 +338,7 @@ class AlienTest {
     // [Función Act de Alien]
 
     @Test
-    @DisplayName("[Caja Blanca - Act] Camino 1 -> X inicial=" + (X_NOMINAL + 2) + ", act(-2)")
+    @DisplayName("[Caja Blanca - Act] Camino 1 -> X inicial=" + (X_NOMINAL + 2) + ", act(2)")
     void testCajaBlanca_AlienAct_Camino1() {
         Alien alien = new Alien((X_NOMINAL + 2), Y_NOMINAL);
         alien.act(+2); // Porque resta -2 el act()
