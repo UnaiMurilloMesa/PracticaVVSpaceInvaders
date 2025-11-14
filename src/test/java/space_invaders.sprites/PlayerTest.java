@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class PlayerTest {
 
@@ -113,17 +114,20 @@ public class PlayerTest {
     //CAJA BLANCA
     //tests para Player() y initPlayer()
     @Test
-    public void testConstructor_InitPlayer_ExecutionPath() throws Exception {
+    public void testConstructor_InitPlayer_ExecutionPath() {
         assertNotNull(player, "El objeto Player debería haberse creado correctamente");
 
         Image image = player.getImage();
         assertNotNull(image, "La imagen del jugador debería haberse cargado correctamente");
 
-        Field width = player.getClass().getDeclaredField("width");
-        width.setAccessible(true);
-        int widthValue = (int) width.get(player);
-        assertEquals(image.getWidth(null), widthValue, "El atributo 'width' debe coincidir con el ancho de la imagen cargada");
-
+        try {
+            Field width = player.getClass().getDeclaredField("width");
+            width.setAccessible(true);
+            int widthValue = (int) width.get(player);
+            assertEquals(image.getWidth(null), widthValue, "El atributo 'width' debe coincidir con el ancho de la imagen cargada");
+        }catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Error al acceder al campo 'width': " + e.getMessage());
+        }
         assertEquals(179, player.getX(), "La posición X inicial debería ser 179");
         assertEquals(280, player.getY(), "La posición Y inicial debería ser 280");
 
@@ -137,20 +141,24 @@ public class PlayerTest {
             "1, -2, 2", //C2. Límite izquierdo
             "400, 2, -1" //C3. Límite derecho
     })
-    void testAct_ExecutionPaths(int initialX, int dx, int expectedX) throws Exception {
+    void testAct_ExecutionPaths(int initialX, int dx, int expectedX) {
         player.setX(initialX);
         player.dx = dx;
 
-        Field widthField = player.getClass().getDeclaredField("width");
-        widthField.setAccessible(true);
-        int width = (int) widthField.get(player);
+        try {
+            Field widthField = player.getClass().getDeclaredField("width");
+            widthField.setAccessible(true);
+            int width = (int) widthField.get(player);
 
-        if (expectedX == -1){
-            expectedX = 358 + 2 * width;
+            if (expectedX == -1) {
+                expectedX = 358 + 2 * width;
+            }
+
+            player.act();
+
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Error al acceder al campo 'width': " + e.getMessage());
         }
-
-        player.act();
-
         assertEquals(expectedX, player.getX(), "El jugador debería moverse correctamente según dx y respetar los límites del tablero");
     }
 }
