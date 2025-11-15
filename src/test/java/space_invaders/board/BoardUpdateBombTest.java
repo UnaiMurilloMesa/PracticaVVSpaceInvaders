@@ -143,7 +143,7 @@ public class BoardUpdateBombTest {
 
     @Test
     @DisplayName("Si la bomba impacta al jugador visible, el jugador muere y la bomba se destruye")
-    void shouldMarkPlayerAsDyingWhenHitByBomb() throws Exception {
+    void shouldKillPlayerWhenHitByBomb() throws Exception {
         Alien alien = new Alien(20, 100);
         Alien.Bomb bomb = alien.getBomb();
 

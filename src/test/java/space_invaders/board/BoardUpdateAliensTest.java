@@ -30,7 +30,7 @@ public class BoardUpdateAliensTest {
     // CAJA BLANCA ->
     @Test
     @DisplayName("Alien por debajo de GROUND activa invasión")
-    void shouldTriggerInvasionWhenAlienPassesYlimit() throws Exception {
+    void shouldTriggerInvasionWhenAlienPassesGround() throws Exception {
         Alien alien = new Alien(20, Commons.GROUND + Commons.ALIEN_HEIGHT);
         board.setAliens(List.of(alien));
 
@@ -82,6 +82,7 @@ public class BoardUpdateAliensTest {
         board.setDirection(1);
         invokePrivateUpdateAliens();
 
+        assertTrue(board.getAliens().get(0).isVisible(), "El alien debe ser visible");
         assertTrue(initialX < alien.getX(), "El alien debe moverse hacia la derecha si la dirección es 1");
         assertEquals(initialY, alien.getY(), "El alien no debe moverse en vertical");
     }
@@ -98,6 +99,7 @@ public class BoardUpdateAliensTest {
         board.setDirection(-1);
         invokePrivateUpdateAliens();
 
+        assertTrue(board.getAliens().get(0).isVisible(), "El alien debe ser visible");
         assertTrue(initialX > alien.getX(), "EL alien debe moverse a la izquierda si la posicion es -1");
         assertEquals(initialY, alien.getY(), "El alien no debe moverse en vertical");
     }
