@@ -1,6 +1,8 @@
 package space_invaders.sprites;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.lang.reflect.Method;
 
@@ -15,7 +17,7 @@ public class ShotTest {
 
 
     /**
-     * Test para comprobar que no se crea un objeto vacío con el constructor sin parámetros
+     * Comprobar que no se crea un objeto vacío
      */
     @Test
     void testShotIsNotNull() {
@@ -37,12 +39,21 @@ public class ShotTest {
 
     /**
      * Test para verificar que las coordenadas de un nuevo objeto Shot son las correctas.
-     * Como no se especifican restricciones en la documentación, se establecen parámetros dentro de los límites,
-     * como fue acordado con el profesor
+     * Como no se especifican restricciones en la documentación, todos los valores son válidos
      */
-    @Test
-    void testCoordenadasShot() {
-        int x, y; x = y = 250;
+    @ParameterizedTest
+    @CsvSource ({
+            "-10, -10",
+            "250, -1",
+            "260, -1",
+            "-1, 250",
+            "250, 250",
+            "360, 250",
+            "-10, 352",
+            "250, 352",
+            "360, 352"
+    })
+    void testCoordenadasShot(int x, int y) {
         Shot shot = new Shot(x, y);
 
         // Ajustamos los valores como indica la documentación del método initShot()
@@ -100,7 +111,7 @@ public class ShotTest {
             int expectedX = x + 6;
             int expectedY = y - 1;
 
-            // Comprobamos que el efecto es el deseado
+            assertNotNull(shot.getImage(), "La imagen de Shot no debería de ser null");
             assertEquals(expectedX, valorx, "La posición de Shot debería ser " + expectedX);
             assertEquals(expectedY, valory, "La posición de Shot debería ser " + expectedY);
 
