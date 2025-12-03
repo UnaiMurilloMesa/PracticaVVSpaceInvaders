@@ -240,7 +240,7 @@ class AlienTest {
     void testCajaNegra_AlienAct_LimiteInferior_MovimientoDerecha() {
         Alien alien = new Alien(CERO, 0);
         alien.act(+2); // Intentar mover a +2
-        assertEquals(CERO, alien.getX(), "X debe ser " + (CERO + 2));
+        assertEquals(2, alien.getX(), "X debe ser " + (CERO + 2));
     }
 
     /**
