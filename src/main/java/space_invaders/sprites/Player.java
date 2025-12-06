@@ -37,10 +37,10 @@ public class Player extends Sprite {
         width = ii.getImage().getWidth(null);
         setImage(ii.getImage());
 
-        int START_X = 179;
+        int START_X = Commons.BOARD_WIDTH / 2;
         setX(START_X);
 
-        int START_Y = 280;
+        int START_Y = Commons.GROUND - 10;
         setY(START_Y);
     }
 
@@ -58,16 +58,20 @@ public class Player extends Sprite {
      */
     public void act() {
 
+        //desplazamiento horizontal
         x += dx;
 
-        if (x <= 2) {
+        // reemplazado número mágico por constante
+        if (x <= Commons.BORDER_LEFT) {
 
-            x = 2;
+            x = Commons.BORDER_LEFT;
         }
+        // nuevo cálculo del límite derecho con constantes
+        int rightLimit = Commons.BOARD_WIDTH - Commons.PLAYER_WIDTH - Commons.BORDER_RIGHT;
 
-        if (x >= Commons.BOARD_WIDTH - 2 * width) {
-
-            x = Commons.BOARD_WIDTH + 2 * width;
+        //condición actualizada con el nuevo límite derecho
+        if (x >= rightLimit) {
+            x = rightLimit;
         }
     }
 

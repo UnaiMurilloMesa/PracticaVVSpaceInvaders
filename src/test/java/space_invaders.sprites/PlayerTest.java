@@ -128,8 +128,8 @@ public class PlayerTest {
         }catch (NoSuchFieldException | IllegalAccessException e) {
             fail("Error al acceder al campo 'width': " + e.getMessage());
         }
-        assertEquals(179, player.getX(), "La posición X inicial debería ser 179");
-        assertEquals(280, player.getY(), "La posición Y inicial debería ser 280");
+        assertEquals(Commons.BOARD_WIDTH / 2, player.getX(), "La posición X inicial debería ser 179");
+        assertEquals(Commons.GROUND - 10, player.getY(), "La posición Y inicial debería ser 280");
 
         assertTrue(player.isVisible());
 
@@ -138,27 +138,15 @@ public class PlayerTest {
     @ParameterizedTest
     @CsvSource({
             "100, 2, 102", //C1. Movimiento dentro de los límites
-            "1, -2, 2", //C2. Límite izquierdo
-            "400, 2, -1" //C3. Límite derecho
+            "6, -2, " +  Commons.BORDER_LEFT, //C2. Límite izquierdo
+            "312, 2, 313" //C3. Límite derecho
     })
     void testAct_ExecutionPaths(int initialX, int dx, int expectedX) {
         player.setX(initialX);
         player.dx = dx;
 
-        try {
-            Field widthField = player.getClass().getDeclaredField("width");
-            widthField.setAccessible(true);
-            int width = (int) widthField.get(player);
+        player.act();
 
-            if (expectedX == -1) {
-                expectedX = 358 + 2 * width;
-            }
-
-            player.act();
-
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            fail("Error al acceder al campo 'width': " + e.getMessage());
-        }
         assertEquals(expectedX, player.getX(), "El jugador debería moverse correctamente según dx y respetar los límites del tablero");
     }
 }
