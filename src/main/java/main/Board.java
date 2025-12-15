@@ -365,7 +365,6 @@ public class Board extends JPanel {
                 this.shot.die();
             } else {
                 this.shot.setY(y);
-                this.shot.setX(y);
             }
         }
     }
