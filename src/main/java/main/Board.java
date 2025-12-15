@@ -570,7 +570,7 @@ public class Board extends JPanel {
 
                     if (!shot.isVisible()) {
 
-                        shot = new Shot(y, x);
+                        shot = new Shot(x, y);
                     }
                 }
             }
