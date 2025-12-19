@@ -4,12 +4,14 @@ import main.Commons;
 
 import javax.swing.ImageIcon;
 import java.awt.event.KeyEvent;
+import java.util.logging.Logger;
 
 /**
  * {@summary Clase que representa al jugador en el juego Space Invaders.}
  */
 public class Player extends Sprite {
 
+    private static final Logger LOGGER = Logger.getLogger(Player.class.getName());
     private int width;
 
     /**
@@ -59,20 +61,21 @@ public class Player extends Sprite {
     public void act() {
 
         //desplazamiento horizontal
-        x += dx;
+        x += dx; //b1
 
         // reemplazado número mágico por constante
-        if (x <= Commons.BORDER_LEFT) {
+        if (x <= Commons.BORDER_LEFT) { //b2
 
-            x = Commons.BORDER_LEFT;
+            x = Commons.BORDER_LEFT; //b3
         }
         // nuevo cálculo del límite derecho con constantes
-        int rightLimit = Commons.BOARD_WIDTH - Commons.PLAYER_WIDTH - Commons.BORDER_RIGHT;
+        int rightLimit = Commons.BOARD_WIDTH - Commons.PLAYER_WIDTH - Commons.BORDER_RIGHT; //b4
 
         //condición actualizada con el nuevo límite derecho
-        if (x >= rightLimit) {
-            x = rightLimit;
+        if (x >= rightLimit) { //b5
+            x = rightLimit; //b6
         }
+        //b7
     }
 
     /**
