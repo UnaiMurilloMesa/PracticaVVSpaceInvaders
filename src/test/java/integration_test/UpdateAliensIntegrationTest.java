@@ -61,7 +61,7 @@ public class UpdateAliensIntegrationTest {
 
         verify(alienMock, atLeastOnce()).getY();
 
-        assertEquals("El mensaje debería ser de invasión", "Invasion!", board.getMessage());
+        assertEquals("Invasion!", board.getMessage(), "El mensaje debería ser de invasión");
     }
 
     // TEST 3: INTEGRACIÓN DE MOVIMIENTO NORMAL
@@ -80,6 +80,6 @@ public class UpdateAliensIntegrationTest {
         verify(alienMock, times(1)).act(anyInt());
 
 
-        assertNotEquals("Invasion!", board.getMessage());
+        assertNotEquals("Invasion!", board.getMessage(), "El juego no debería estar en invasión");
     }
 }
