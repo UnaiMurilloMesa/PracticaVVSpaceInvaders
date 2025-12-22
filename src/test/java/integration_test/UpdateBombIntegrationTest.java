@@ -9,11 +9,13 @@ import static org.junit.jupiter.api.Assertions.fail;
 import space_invaders.sprites.Alien;
 import space_invaders.sprites.Player;
 
+import javax.swing.Timer;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,6 +37,11 @@ public class UpdateBombIntegrationTest {
         board.setAliens(aliens);
         board.setPlayer(mockPlayer);
 
+        if (board.getTimer() != null) {
+            board.getTimer().stop();
+        }
+        board.setTimer(mock(Timer.class));
+
         when(mockAlien.getBomb()).thenReturn(mockBomb);
     }
 
@@ -52,19 +59,24 @@ public class UpdateBombIntegrationTest {
     @Test
     @DisplayName("Integración: La bomba colisiona con el jugador si están en la misma posición")
     void testUpdateBombCollisionWithPlayer() {
+        List<Alien> listAliens = new ArrayList<>();
+        listAliens.add(mockAlien);
+        board.setAliens(listAliens);
+
         when(mockPlayer.isVisible()).thenReturn(true);
         when(mockAlien.isVisible()).thenReturn(true);
         when(mockBomb.isDestroyed()).thenReturn(false);
 
-        when(mockPlayer.getX()).thenReturn(100);
-        when(mockPlayer.getY()).thenReturn(100);
-        when(mockBomb.getX()).thenReturn(100);
-        when(mockBomb.getY()).thenReturn(100);
+        int posicion = 50;
+        when(mockPlayer.getX()).thenReturn(posicion);
+        when(mockPlayer.getY()).thenReturn(posicion);
+        when(mockBomb.getX()).thenReturn(posicion);
+        when(mockBomb.getY()).thenReturn(posicion);
 
         invokeUpdateBomb();
 
-        verify(mockPlayer).setDying(true);
-        verify(mockBomb).setDestroyed(true);
+        verify(mockPlayer, times(1)).setDying(true);
+        verify(mockBomb, times(1)).setDestroyed(true);
     }
 
     @Test
