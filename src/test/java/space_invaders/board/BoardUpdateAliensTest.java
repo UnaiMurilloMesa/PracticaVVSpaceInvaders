@@ -43,7 +43,7 @@ public class BoardUpdateAliensTest {
     @Test
     @DisplayName("Alien alcanza el borde derecho cambia dirección a -1 y baja")
     void shouldChangeDirectionToLeftWhenAtRightLimit() throws Exception {
-        Alien alien = new Alien(Commons.BORDER_RIGHT, 100); // Alien en el borde derecho
+        Alien alien = new Alien(Commons.BOARD_WIDTH - Commons.BORDER_RIGHT, 100); // Alien en el borde derecho
         board.setAliens(List.of(alien));
 
         board.setDirection(1);

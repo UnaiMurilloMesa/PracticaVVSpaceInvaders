@@ -409,7 +409,7 @@ public class Board extends JPanel {
 
             int x = alien.getX(); //d2
 
-            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction == -1) { //d3
+            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction == 1) { //d3
 
                 direction = -1;
 
@@ -446,9 +446,9 @@ public class Board extends JPanel {
 
                 int y = alien.getY();
 
-                if (y > Commons.GROUND + Commons.ALIEN_HEIGHT) { //d10
+                if (y > Commons.GROUND - Commons.ALIEN_HEIGHT) { //d10
                     //d11
-                    inGame = true;
+                    inGame = false;
                     message = "Invasion!";
                 }
 
@@ -494,7 +494,7 @@ public class Board extends JPanel {
             int rand = generator.nextInt(15);
             Alien.Bomb bomb = alien.getBomb();
 
-            if (rand != Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) { //e4
+            if (rand == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) { //e4
                 //e5
                 bomb.setDestroyed(false);
                 bomb.setX(alien.getX());
@@ -522,7 +522,7 @@ public class Board extends JPanel {
 
             if (!bomb.isDestroyed()) { //e10
 
-                bomb.setY(bomb.getY() - Commons.BOMB_SPEED); //e11
+                bomb.setY(bomb.getY() + Commons.BOMB_SPEED); //e11
 
                 if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) { //e12
 

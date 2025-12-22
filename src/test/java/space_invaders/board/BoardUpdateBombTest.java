@@ -77,7 +77,7 @@ public class BoardUpdateBombTest {
         bomb.setDestroyed(false);
         Player player = new Player();
         bomb.setX(player.getX() + Commons.PLAYER_WIDTH + 5);
-        bomb.setY(player.getY() + Commons.PLAYER_HEIGHT + 5);
+        bomb.setY(player.getY() - Commons.PLAYER_HEIGHT + 5);
         board.setAliens(List.of(alien));
         board.setPlayer(player);
 
@@ -121,7 +121,7 @@ public class BoardUpdateBombTest {
 
         invokeUpdateBomb();
 
-        int expectedY = 200 - Commons.BOMB_SPEED;
+        int expectedY = 200 + Commons.BOMB_SPEED;
         assertEquals(expectedY, bomb.getY(), "La bomba debe descender según la velocidad Commons.BOMB_SPEED");
     }
 
