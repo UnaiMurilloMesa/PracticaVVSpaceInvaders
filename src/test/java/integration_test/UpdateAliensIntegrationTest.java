@@ -35,10 +35,6 @@ public class UpdateAliensIntegrationTest {
         method.invoke(board);
     }
 
-
-    // TEST 1: INTEGRACIÓN DE COORDINACIÓN (CHOQUE CON BORDE)
-    // MM-Path: d1 -> d2(getX) -> d3(Check Borde) -> d4(setY)
-    // Objetivo: Verificar que Board coordina al grupo para bajar si uno toca el borde.
     @Test
     public void testMMPath_Aliens_HitRightBorder() throws Exception {
         when(alienMock.getX()).thenReturn(Commons.BOARD_WIDTH - Commons.BORDER_RIGHT + 1);
@@ -48,10 +44,6 @@ public class UpdateAliensIntegrationTest {
         verify(alienMock, atLeastOnce()).setY(anyInt());
     }
 
-
-    // TEST 2: INTEGRACIÓN DE FIN DE JUEGO (INVASIÓN)
-    // MM-Path: d8 -> d9(Visible) -> d10(getY > Ground) -> d11(Invasion!)
-    // Objetivo: Verificar que Board detecta cuándo los aliens tocan el suelo.
     @Test
     public void testMMPath_Aliens_Invasion() throws Exception {
         when(alienMock.isVisible()).thenReturn(true);
@@ -64,10 +56,6 @@ public class UpdateAliensIntegrationTest {
         assertEquals("Invasion!", board.getMessage(), "El mensaje debería ser de invasión");
     }
 
-    // TEST 3: INTEGRACIÓN DE MOVIMIENTO NORMAL
-    // MM-Path: d8 -> d9(Visible) -> d10(Seguro) -> d12(act)
-    // Objetivo: Verificar que Board delega el movimiento individual en cada ciclo.
-    // =========================================================================
     @Test
     public void testMMPath_Aliens_NormalMove() throws Exception {
         when(alienMock.isVisible()).thenReturn(true);
