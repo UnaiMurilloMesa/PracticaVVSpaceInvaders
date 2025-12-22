@@ -5,7 +5,7 @@ import main.Commons;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.fail;
+import org.mockito.MockedConstruction;
 import space_invaders.sprites.Alien;
 import space_invaders.sprites.Player;
 
@@ -13,8 +13,12 @@ import javax.swing.Timer;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -80,6 +84,20 @@ public class UpdateBombIntegrationTest {
     }
 
     @Test
+    @DisplayName("Integración: La bomba debe avanzar hacia abajo")
+    void testUpdateBombMoves() {
+        when(mockBomb.isDestroyed()).thenReturn(false);
+        when(mockPlayer.isVisible()).thenReturn(false);
+
+        int posicion = 50;
+        when(mockBomb.getY()).thenReturn(posicion);
+
+        invokeUpdateBomb();
+
+        verify(mockBomb, atLeastOnce()).getY();
+    }
+
+    @Test
     @DisplayName("Integración: La bomba debe destruirse al tocar el suelo")
     void testUpdateBombReachesGround() {
         when(mockBomb.isDestroyed()).thenReturn(false);
@@ -89,6 +107,25 @@ public class UpdateBombIntegrationTest {
 
         invokeUpdateBomb();
 
-        verify(mockBomb).setDestroyed(true);
+        verify(mockBomb, atLeastOnce()).getY();
+        verify(mockBomb, atLeastOnce()).setDestroyed(true);
+    }
+
+    @Test
+    @DisplayName("Integración: Creación de la bomba")
+    void testUpdateBombCreation() {
+       when(mockAlien.isVisible()).thenReturn(true);
+       when(mockBomb.isDestroyed()).thenReturn(true);
+
+        try (MockedConstruction<Random> mockedRandom = mockConstruction(Random.class,
+                (mock, context) -> when(mock.nextInt(15)).thenReturn(Commons.CHANCE))) {
+            invokeUpdateBomb();
+        }
+
+        verify(mockBomb).setDestroyed(false);
+        verify(mockBomb).getX();
+        verify(mockBomb).getY();
+        verify(mockBomb).setX(mockAlien.getX());
+        verify(mockBomb).setY(mockAlien.getY());
     }
 }
